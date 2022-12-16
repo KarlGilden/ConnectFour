@@ -17,7 +17,11 @@ printBoard(board, ROWS, COLS)
 
 # game loop
 while playing:
-    player = takeTurn(board, player)
-    if player == "You win":
+    win = takeTurn(board, player)
+    if win:
+        counter = "🔴" if player else "🟡"
+        print(counter," won!")
         break
-    printBoard(board, ROWS, COLS)
+    
+    if win != None:
+        player = not player
