@@ -1,5 +1,5 @@
 def printBoard(c, ROWS, board):
-    for x in range(ROWS):
+    for x in range(ROWS -1, -1, -1):
         for y in range(board):
             print(c[y][x], end="")
         print(" ")
@@ -7,7 +7,7 @@ def printBoard(c, ROWS, board):
 def checkX(board, player, col, index):
     x_cols = []
     for i in range(len(board)):
-        x_cols.append(board[i][-(index + 1)])
+        x_cols.append(board[i][index])
     
     print("Row: ", x_cols)
     counter = "🔴" if player else "🟡"
@@ -17,24 +17,18 @@ def checkX(board, player, col, index):
     
     while right >= 0 and right < len(x_cols) -1:
         if x_cols[right] != counter:
-            print("Right: ", left)
-            print("right fail")
             break
         else:
             connected += 1
-            print("right pass")
             if connected >= 5:
                 return True
         right += 1
         
     while left >= 0 and left < len(x_cols) -1:
         if x_cols[left] != counter:
-            print("Left: ",  left)
-            print("left fail")
             break
         else:
             connected += 1
-            print("left pass")
             if connected >= 5:
                 return True
         left -= 1
@@ -72,8 +66,17 @@ def checkY(board, player, col, index):
     return False
 
 
-def checkLeftD():
-    pass
+def checkLeftD(board, player, col, index):
+    diagonals = []
+    for i in range(len(board)):
+        diagonals.append(board[i][-(index + 1) + i])
+    
+    print("Diagonal Left: ", diagonals)
+    counter = "🔴" if player else "🟡"
+    connected = 0
+    right = col
+    left = col
+    
 
 def checkRightD():
     pass
@@ -87,25 +90,20 @@ def takeTurn(board, player):
         col = int(input("Pick a column: "))
         
         # reverse list find next available slot in column
-        copy = board[int(col)]
-        copy.reverse()
-        indexAt = copy.index("⚫")
+        indexAt = board[col].index("⚫")
         
         # fill slot
         if player:
-            copy[indexAt] = "🔴"
+            board[col][indexAt] = "🔴"
         else:
-            copy[indexAt] = "🟡"
-        
-        # insert copy back into game board
-        copy.reverse()
-        board[int(col)] = copy
-        
+            board[col][indexAt] = "🟡"
+
         printBoard(board, ROWS, COLS)
                 
         # check if winning move
         y = checkY(board, player, col, indexAt)
         x = checkX(board, player, col, indexAt)
+        dl = checkLeftD(board, player, col, indexAt)
         if (y or x) == True:
             return True
         # return false for winning game
