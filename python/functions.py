@@ -67,16 +67,32 @@ def checkY(board, player, col, index):
 
 
 def checkLeftD(board, player, col, index):
-    diagonals = []
-    for i in range(len(board)):
-        diagonals.append(board[i][-(index + 1) + i])
-    
-    print("Diagonal Left: ", diagonals)
     counter = "🔴" if player else "🟡"
     connected = 0
-    right = col
-    left = col
-    
+    up, down = index, index
+    left, right = col, col
+    while down >= 0 and down < len(board[col]):
+        if board[left][down] != counter:
+            break
+        else:
+            connected += 1
+            if connected >= 5:
+                return True
+        down += 1
+        left += 1
+        
+    while up >= 0 and up < len(board[col]):
+        if board[right][up] != counter:
+            break
+        else:
+            connected += 1
+            if connected >= 5:
+                return True
+        up -= 1
+        right -= 1
+        
+    return False
+
 
 def checkRightD():
     pass
@@ -104,7 +120,7 @@ def takeTurn(board, player):
         y = checkY(board, player, col, indexAt)
         x = checkX(board, player, col, indexAt)
         dl = checkLeftD(board, player, col, indexAt)
-        if (y or x) == True:
+        if (y or x or dl) == True:
             return True
         # return false for winning game
         return False
