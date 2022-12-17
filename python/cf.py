@@ -16,11 +16,15 @@ printBoard(board)
 
 # game loop
 while True:
-    win = takeTurn(board, player)
-    if win:
+    #take turn
+    is_winner = takeTurn(board, player)
+    
+    # check if winner
+    if is_winner:
         counter = "🔴" if player else "🟡"
         print(counter," won!")
         break
     
+    # if move is valid, switch player
     if win != None:
         player = not player

@@ -130,22 +130,19 @@ def checkRightD(board, counter, col, row):
     return False
 
 def takeTurn(board, player):
-    global on
     counter = "🔴" if player else "🟡"
 
     try:
-        # column selection
+        # user selects column
         col = int(input("Pick a column: "))
         
-        # reverse list find next available slot in column
+        # find next available slot in column
         indexAt = board[col].index("⚫")
         
         # fill slot
-        if player:
-            board[col][indexAt] = "🔴"
-        else:
-            board[col][indexAt] = "🟡"
+        board[col][indexAt] = counter
 
+        # reprint board
         printBoard(board)
                 
         # check if winning move
@@ -154,9 +151,11 @@ def takeTurn(board, player):
         dl = checkLeftD(board, counter, col, indexAt)
         dr = checkRightD(board, counter, col, indexAt)
 
-        if (y or x or dl or dr) == True:
+        # return true if winning move
+        if y or x or dl or dr:
             return True
-        # return false for winning game
+        
+        # return false if not winning move
         return False
 
     except (IndexError, ValueError):
