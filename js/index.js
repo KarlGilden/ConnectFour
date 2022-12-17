@@ -1,11 +1,8 @@
+// constants
 const ROWS = 6
 const COLS = 7
-// board.innerHTML += `
-// <div id='slot${i}' class='slot'>
 
-// </div>
-// `
-// generate board data
+// generate init board data
 
 const generateBoardData = () => {
     var boardArray = []
@@ -23,7 +20,7 @@ const generateBoardData = () => {
 
 const generateBoard = () => {
     const boardElement = document.getElementById("board")
-    boardElement.innerHTML = ""
+    boardElement.innerHTML = ``
     console.log(boardData)
 
     for(let i=0; i<boardData.length; i++){
@@ -59,12 +56,24 @@ const takeTurn = (col) => {
     const rd = checkRD(token, col, row)
     const ld = checkLD(token, col, row)
 
-    if(y || x || rd || ld){ alert("You win")}
+    if(y || x || rd || ld){ 
+        document.getElementById("body").innerHTML += `
+            <div id="win-screen" class="win-screen">
+                <div class="win-wrapper">
+                    <h1 class="win-title">Winner!</h1>
+                    <div class='win-token ${token}'></div>
+                    <button class='play-button' onclick="playAgain()">Play again</button>
+                </div>
+            </div>
+        `
+        
+    }
 
 
     if(row != null) player = !player
 }
 
+// update board
 const updateData = (token, col) => {
     var row = boardData[col].indexOf("b")
     if(row == -1){
@@ -75,6 +84,7 @@ const updateData = (token, col) => {
     
 }
 
+// check winning states
 const checkY = (token, col, row) => {
     var connected = 0
     var up = row
@@ -195,14 +205,19 @@ const checkLD = (token, col, row) => {
     return false
 }
 
+const playAgain = () => {
+    boardData = generateBoardData()
+    generateBoard()
+    document.getElementById("win-screen").remove()
+    player = false
+}
+
+
 // set player
 var player = false
 
 // generate board data
-const boardData = generateBoardData()
+var boardData = generateBoardData()
 
 // generate board UI
 generateBoard()
-
-
-
