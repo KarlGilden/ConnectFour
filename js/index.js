@@ -1,14 +1,18 @@
 const ROWS = 6
 const COLS = 7
+// board.innerHTML += `
+// <div id='slot${i}' class='slot'>
 
+// </div>
+// `
 // generate board data
 
 const generateBoardData = () => {
-    const boardArray = []
+    var boardArray = []
     for(let i=0; i<COLS; i++){
         const cols = []
         for(let j=0; j<ROWS; j++){
-            cols.push("0")
+            cols.push("b")
         }
         boardArray.push(cols)
     }
@@ -18,12 +22,187 @@ const generateBoardData = () => {
 // generate board ui
 
 const generateBoard = () => {
-    const board = document.getElementById("board")
-    for(let i=1; i<=ROWS*COLS; i++){
-        board.innerHTML += `
-            <div id='slot${i}' class='slot'>
+    const boardElement = document.getElementById("board")
+    boardElement.innerHTML = ""
+    console.log(boardData)
 
+    for(let i=0; i<boardData.length; i++){
+        const reversedBoard = boardData[i].slice().reverse()
+        boardElement.innerHTML += `
+            <div onclick={takeTurn(${i})} id='col${i}' class='col'>
+                ${reversedBoard.map((value, index)=>{
+                    return (
+                        `
+                        <div id='slot${index}' class='slot ${value}'>
+
+                        </div>
+                        `
+                    );
+                })}
             </div>
         `
     }
 }
+
+// user turn
+
+const takeTurn = (col) => {
+    const token = player ? "r" : "y"
+
+    // update data
+    const row = updateData(token, col)
+    // update ui
+    generateBoard()
+    // check for win
+    const y = checkY(token, col, row)
+    const x = checkX(token, col, row)
+    const rd = checkRD(token, col, row)
+    const ld = checkLD(token, col, row)
+
+    if(y || x || rd || ld){ alert("You win")}
+
+
+    if(row != null) player = !player
+}
+
+const updateData = (token, col) => {
+    var row = boardData[col].indexOf("b")
+    if(row == -1){
+        return null
+    }
+    boardData[col][row] = token
+    return row
+    
+}
+
+const checkY = (token, col, row) => {
+    var connected = 0
+    var up = row
+    var down = row
+
+    while(up < ROWS && up >= 0){
+        if(boardData[col][up] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        up++
+    }
+
+    while(down < ROWS && down >= 0){
+        if(boardData[col][down] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        down--
+    }
+
+    return false
+}
+
+const checkX = (token, col, row) => {
+    var connected = 0
+    var left = col
+    var right = col
+
+    while(right < ROWS && right >= 0){
+        if(boardData[right][row] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        right++
+    }
+
+    while(left < ROWS && left >= 0){
+        if(boardData[left][row] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        left--
+    }
+
+    return false
+}
+
+const checkRD = (token, col, row) => {
+    var connected = 0
+    var left = col
+    var right = col
+    var up = row
+    var down = row
+
+    while(right < ROWS && right >= 0 && up < ROWS && up >= 0){
+        if(boardData[right][up] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        right++
+        up++
+    }
+
+    while(left < ROWS && left >= 0 && down < ROWS && down >= 0){
+        if(boardData[left][down] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        left--
+        down--
+    }
+
+    return false
+}
+
+const checkLD = (token, col, row) => {
+    var connected = 0
+    var left = col
+    var right = col
+    var up = row
+    var down = row
+
+    while(right < ROWS && right >= 0 && down < ROWS && down >= 0){
+        if(boardData[right][down] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        right++
+        down--
+    }
+
+    while(left < ROWS && left >= 0 && up < ROWS && up >= 0){
+        if(boardData[left][up] != token) break
+
+        connected += 1
+
+        if(connected >= 5) return true
+
+        left--
+        up++
+    }
+
+    return false
+}
+
+// set player
+var player = false
+
+// generate board data
+const boardData = generateBoardData()
+
+// generate board UI
+generateBoard()
+
+
+
