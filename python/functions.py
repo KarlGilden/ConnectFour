@@ -1,3 +1,4 @@
+# constants
 ROWS = 6
 COLS = 7
 
@@ -33,9 +34,7 @@ def checkX(board, counter, col, row):
             return True
         left -= 1
         
-    return False 
-    
-        
+    return False  
 
 def checkY(board, counter, col, row):
     connected = 0
@@ -64,7 +63,6 @@ def checkY(board, counter, col, row):
         up += 1
         
     return False
-
 
 def checkLeftD(board, counter, col, row):
     connected = 0
@@ -96,7 +94,6 @@ def checkLeftD(board, counter, col, row):
         right += 1
         
     return False
-
 
 def checkRightD(board, counter, col, row):
     connected = 0
@@ -159,4 +156,4 @@ def takeTurn(board, player):
         return False
 
     except (IndexError, ValueError):
-        print("Oops!  That was no valid number.  Try again...")
+        print("Oops!  That was not a valid column.  Try again...")
