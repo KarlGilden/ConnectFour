@@ -13,7 +13,7 @@ def checkX(board, counter, col, row):
     left, right = col, col
     
     # search right
-    while right >= 0 and right < COLS -1:
+    while right >= 0 and right < COLS:
         if board[right][row] != counter: # go to search left
             break
         
@@ -24,7 +24,7 @@ def checkX(board, counter, col, row):
         right += 1
         
     # search left
-    while left >= 0 and left < COLS -1:
+    while left >= 0 and left < COLS:
         if board[left][row] != counter: # end search
             break
         
@@ -101,7 +101,7 @@ def checkRightD(board, counter, col, row):
     left, right = col, col
     
     # search down and right
-    while right >= 0 and down >= 0 and right < len(board[col]) and down < len(board[col]):
+    while right >= 0 and down >= 0 and right < COLS and down < ROWS:
         if board[right][down] != counter: # go to search up and left if not a valid counter
             break
         
@@ -113,7 +113,7 @@ def checkRightD(board, counter, col, row):
         right += 1
         
     # search up and left
-    while left >= 0 and up >= 0 and up < len(board[col]) and left < len(board[col]):
+    while left >= 0 and up >= 0 and up < COLS and left < ROWS:
         if board[left][up] != counter: # go to search up and left if not a valid counter
             break
         

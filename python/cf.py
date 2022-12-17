@@ -22,5 +22,5 @@ while True:
         break
     
     # if move is valid, switch player
-    if win != None:
+    if is_winner != None:
         player = not player
