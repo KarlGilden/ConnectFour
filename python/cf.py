@@ -9,14 +9,13 @@ COLS = 7
 board = [["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"],["⚫","⚫","⚫","⚫","⚫","⚫"]]
 
 # game variables
-playing = True
 player = False
 
 # print starting board
-printBoard(board, ROWS, COLS)
+printBoard(board)
 
 # game loop
-while playing:
+while True:
     win = takeTurn(board, player)
     if win:
         counter = "🔴" if player else "🟡"
