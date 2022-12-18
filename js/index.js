@@ -118,7 +118,7 @@ const checkX = (token, col, row) => {
     var left = col
     var right = col
 
-    while(right < ROWS && right >= 0){
+    while(right < COLS && right >= 0){
         if(boardData[right][row] != token) break
 
         connected += 1
@@ -128,7 +128,7 @@ const checkX = (token, col, row) => {
         right++
     }
 
-    while(left < ROWS && left >= 0){
+    while(left < COLS && left >= 0){
         if(boardData[left][row] != token) break
 
         connected += 1
@@ -148,7 +148,7 @@ const checkRD = (token, col, row) => {
     var up = row
     var down = row
 
-    while(right < ROWS && right >= 0 && up < ROWS && up >= 0){
+    while(right < COLS && right >= 0 && up < ROWS && up >= 0){
         if(boardData[right][up] != token) break
 
         connected += 1
@@ -159,7 +159,7 @@ const checkRD = (token, col, row) => {
         up++
     }
 
-    while(left < ROWS && left >= 0 && down < ROWS && down >= 0){
+    while(left < COLS && left >= 0 && down < ROWS && down >= 0){
         if(boardData[left][down] != token) break
 
         connected += 1
@@ -180,7 +180,7 @@ const checkLD = (token, col, row) => {
     var up = row
     var down = row
 
-    while(right < ROWS && right >= 0 && down < ROWS && down >= 0){
+    while(right < COLS && right >= 0 && down < ROWS && down >= 0){
         if(boardData[right][down] != token) break
 
         connected += 1
@@ -191,7 +191,7 @@ const checkLD = (token, col, row) => {
         down--
     }
 
-    while(left < ROWS && left >= 0 && up < ROWS && up >= 0){
+    while(left < COLS && left >= 0 && up < ROWS && up >= 0){
         if(boardData[left][up] != token) break
 
         connected += 1
