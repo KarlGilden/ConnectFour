@@ -2,6 +2,10 @@
 const ROWS = 6
 const COLS = 7
 
+// game variables
+var boardData;
+var player;
+
 // generate init board data
 
 const generateBoardData = () => {
@@ -20,21 +24,17 @@ const generateBoardData = () => {
 
 const generateBoard = () => {
     const boardElement = document.getElementById("board")
+
     boardElement.innerHTML = ``
-    console.log(boardData)
 
     for(let i=0; i<boardData.length; i++){
         const reversedBoard = boardData[i].slice().reverse()
         boardElement.innerHTML += `
             <div onclick={takeTurn(${i})} id='col${i}' class='col'>
                 ${reversedBoard.map((value, index)=>{
-                    return (
-                        `
-                        <div id='slot${index}' class='slot ${value}'>
+                    return `<div id='slot${index}' class='slot ${value}'>
 
-                        </div>
-                        `
-                    );
+                        </div>`
                 })}
             </div>
         `
@@ -44,12 +44,15 @@ const generateBoard = () => {
 // user turn
 
 const takeTurn = (col) => {
+    const turnIndicator = document.getElementById("turn-indicator");
     const token = player ? "r" : "y"
 
     // update data
     const row = updateData(token, col)
+
     // update ui
     generateBoard()
+
     // check for win
     const y = checkY(token, col, row)
     const x = checkX(token, col, row)
@@ -69,8 +72,9 @@ const takeTurn = (col) => {
         
     }
 
-
     if(row != null) player = !player
+
+    turnIndicator.textContent = player ? "🔴's turn" : "🟡's turn";
 }
 
 // update board
@@ -206,18 +210,24 @@ const checkLD = (token, col, row) => {
 }
 
 const playAgain = () => {
-    boardData = generateBoardData()
-    generateBoard()
+    initialiseGame();
     document.getElementById("win-screen").remove()
-    player = false
 }
 
+const initialiseGame = () => {
+    const turnIndicator = document.getElementById("turn-indicator");
+    turnIndicator.textContent = "🟡 starts"
 
-// set player
-var player = false
+    // set player
+    player = false
 
-// generate board data
-var boardData = generateBoardData()
+    // generate board data
+    boardData = generateBoardData()
 
-// generate board UI
-generateBoard()
+    // generate board UI
+    generateBoard()
+}
+
+initialiseGame();
+
+
