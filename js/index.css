@@ -114,11 +114,25 @@
 
 @media screen and (max-width: 600px){
     .slot{
+        width: 35px;
+        height: 35px;
+    }
+
+    .board{
+        grid-template-columns: repeat(7, 50px);
+    }
+}
+
+@media screen and (max-width: 415px){
+    .board{
+        padding: 0 0.5rem;
+    }
+    .slot{
         width: 25px;
         height: 25px;
     }
 
     .board{
-        grid-template-columns: repeat(7, 50px);
+        grid-template-columns: repeat(7, 35px);
     }
 }
